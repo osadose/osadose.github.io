@@ -1,6 +1,8 @@
 Hi there, I'm Ose
 
-
+<div style="text-align: center; margin-top: 20px;">
+  <h1 style="font-size: 2.8em; font-weight: bold;">Python Git Course</h1>
+</div>
 
 <h2 style="display: flex; align-items: center; gap: 10px;">
   <img src="https://code.visualstudio.com/assets/favicon.ico" alt="VS Code Logo" width="28">
