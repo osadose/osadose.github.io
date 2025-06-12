@@ -2,116 +2,70 @@ Hi there, I'm Ose
 
 
 ---
-title: "Week 6: Geospatial analysis in Python"
-date: last-modified
-format: 
-  revealjs:
-    theme:
-      - default
-    slide-number: true
-    auto-stretch: false
-    logo: logo.png
-    embed-resources: true
-scrollable: true
+title: "Python Git Course"
+format:
+  html:
+    theme: cosmo
+    toc: true
 ---
 
-## Data models {.smaller}
-:::: {.columns}
+# Welcome to the Python Git Course
 
-::: {.column width="50%"}
-**Raster**    
-- divides surface into regular cells    
-- similar to digital images    
-- e.g. remote sensing, elevation    
-:::
+**Master Git and Python in One Practical Curriculum**
 
-::: {.column width="50%"}
-**Vector**    
-- features defined by x,y coordinates    
-- classified into points, lines and polygons     
-- e.g. administrative data    
-:::
+This course is designed to help you build a strong foundation in both **Python programming** and **Git version control**. Over the span of 8 weeks, you’ll write code, manage files, track changes with Git, and collaborate using GitHub — all with hands-on practice and real-world examples.
 
-::::
+------------------------------------------------------------------------
 
-## Maps distort reality {.smaller}
-![](images/true_size_of_africa.jpg){width=45% fig-align="center"}
+## What You’ll Learn
 
-:::footer
-Source: [The True Size of Africa](http://kai.sub.blue/images/True-Size-of-Africa-kk-v3.pdf)
-:::
+-   **Python fundamentals** — variables, data structures, loops, and functions\
+-   **Data analysis** — loading, cleaning, and analyzing datasets using Python\
+-   **Git version control** — repositories, commits, branches, merges, and remotes\
+-   **GitHub collaboration** — cloning, pull requests, and managing contributions\
+-   **Project organization** — best practices for clean, reproducible code
 
-## Map projections {.smaller}
+------------------------------------------------------------------------
 
-```{python}
-#| label: fig-charts
-#| layout-ncol: 2
-#| fig-cap: 
-#|   - "Mercator"
-#|   - "Gall-Peters"
+## Course Structure
 
-import geopandas as gpd
-import matplotlib.pyplot as plt
+This site contains all weekly modules. Use the sidebar or the table below to jump to specific topics.
 
-world = gpd.read_file('data/ne_110m_admin_0_countries.shp')
-world_sans_antarctica  = world[(world['ADMIN'] != "Antarctica")]
+| Week | Topic | Highlights |
+|-------------------|-----------------------------------|-------------------|
+| **Week 0** | Getting Started | Set up Python and Git, install software |
+| **Week 1** | Git Basics and First Python Steps | First commits, writing scripts |
+| **Week 2** | Git Branches and Collaboration | Git branching and merge conflicts |
+| **Week 3** | Data Structures in Python | Lists, dictionaries, and practical usage |
+| **Week 4** | Importing and Cleaning Data | Handling CSVs and raw datasets |
+| **Week 5** | Data Cleaning in Practice | Working with messy real-world data |
+| **Week 6** | Control Flow | If statements, loops, and logical operations |
+| **Week 7** | Functions and Reuse | Writing and importing functions |
+| **Week 8** | Final Project | Apply everything in a guided project |
 
-world_mercator = world_sans_antarctica .to_crs('EPSG:3395')
-fig, ax = plt.subplots(figsize=(12,10))
-world_mercator.plot(ax=ax, color="lightgray")
-ax.set_axis_off()
-plt.show()
+------------------------------------------------------------------------
 
-world_peters = world_sans_antarctica .to_crs('ESRI:54002')
-fig, ax = plt.subplots(figsize=(12,10))
-world_peters.plot(ax=ax, color="lightgray")
-ax.set_axis_off()
-plt.show()
-```
+## How to Use This Site
 
-## Coordinate reference systems {.smaller}
+-   **Navigation:** Use the left sidebar to browse weeks and lessons.
+-   **Resources:** Each week includes `.ipynb` notebooks, Markdown notes, and datasets.
+-   **Run Code:** You can run and test code using [VS Code](https://code.visualstudio.com/).
 
-::: columns
-::: {.column width="50%"}
-**Geographic CRS**    
-![](images/vector_lonlat.png){width=50%}         
-- position on the Earth's surface     
-- degrees    
-- latitude and longitude    
-- position relative to the equator and the prime meridian   
-- e.g. World Geodetic System (WGS84)   
-:::
+------------------------------------------------------------------------
 
-::: {.column width="50%"}
-**Projected CRS**    
-![](images/vector_projected.png){width=50%}    
-- projects the surface of the earth onto a 2D plane    
-- metres        
-- x, y     
-- e.g. British National Grid (BNG)  
-:::
-:::
+## Prerequisites
 
-:::footer
-Images: [Dorman et al (2025)](https://py.geocompx.org/01-spatial-data)
-:::
+-   A basic comfort with computers
+-   No prior coding experience required — just curiosity and persistence
 
-## Python  {.smaller}
-We use Python's [GeoPandas](https://geopandas.org/en/stable) library to read and manipulate geospatial data.
+------------------------------------------------------------------------
 
-Geospatial data is read as a `GeoDataFrame`, a regular [Pandas](https://pandas.pydata.org/) DataFrame with an additional `.geometry` column. The `.geometry` column contains the coordinates of each feature such as a state boundary. The attributes of each geometry (e.g. state name) are stored in other columns of the dataset.
+## Get Started
 
-For example, the following code uses the GeoPandas library to read an ESRI shapefile of the countries of the world, selects Nigeria and then prints out the first few rows.
+To begin, head to [**Week 0 – Getting Started**](software_list.md) and install the required tools.
 
-```{.python}
-import geopandas as gpd
-world = gpd.read_file("data/ne_110m_admin_0_countries.shp")
-nigeria = world[world['ADMIN'] == 'Nigeria']
-nigeria.head()
-```
+We’re excited to have you on this journey. Let’s start coding and version-controlling like pros!
 
-## Further reading
-- Dorman, M., Graser, A., Nowosad, J., & Lovelace, R. (2025). [Geocomputation with Python](https://py.geocompx.org/). CRC Press
-- Rey, S.J., Arribas-Bel, D., & Wolf, L.J. (2023). [Geographic Data Science with Python](https://geographicdata.science/book/intro.html). CRC Press.
-- Office for National Statistics Geospatial Team. (2021). [Introduction to GIS in Python](https://onsgeo.github.io/geospatial-training/docs/intro_to_gis_in_python)
+------------------------------------------------------------------------
 
+> *“The best way to predict the future is to invent it.”* – Alan Kay
