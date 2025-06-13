@@ -1,8 +1,5 @@
 Hi there, I'm Ose
 
-<div style="text-align: center; margin-top: 20px;">
-  <h1 style="font-size: 2.8em; font-weight: bold;">Python Git Course</h1>
-</div>
 
 <h2 style="display: flex; align-items: center; gap: 10px;">
   <img src="https://code.visualstudio.com/assets/favicon.ico" alt="VS Code Logo" width="28">
@@ -37,6 +34,26 @@ Shell Command: Install 'code' command in PATH
 
 Open a folder:
 File > Open Folder and choose a working directory for your projects.
+
+<h3>Setting Up a Python Virtual Environment</h3>
+
+To create and activate a Python virtual environment (recommended for project isolation):
+
+1. Open the terminal in VS Code (Ctrl+` or View > Terminal)
+2. Create a virtual environment:
+   <pre>python -m venv .venv</pre>
+3. Activate the environment:
+   - On Windows:
+     <pre>.venv\Scripts\activate</pre>
+   - On macOS/Linux:
+     <pre>source .venv/bin/activate</pre>
+4. Your terminal should now show (.venv) at the beginning of the prompt
+5. Install packages within this environment using pip as needed
+
+To make VS Code use this environment:
+1. Open the Command Palette (Ctrl+Shift+P)
+2. Search for "Python: Select Interpreter"
+3. Choose the Python executable from your .venv folder
 
 The set-up steps might be a bit more complicated, so we will cover this during
 the sessions, so don't worry too much about getting it perfect.
