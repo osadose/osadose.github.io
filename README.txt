@@ -2,162 +2,162 @@ Hi there, I'm Ose
 
 
 ---
-title: "Geospatial analysis in Python"
-format: 
+title: "Git Basics and First Python Steps"
+format:
   html:
     self-contained: true
 jupyter: python3
 ---
 
-## Learning objectives
+## Learning Objectives
 
--   read and write geospatial data
--   create a GeoDataFrame
--   transform CRS
--   run a spatial join
--   build a choropleth map with different classifications
+- Understand what Git is and why it’s useful
+- Create and manage a local Git repository
+- Write a basic Python script using pandas
+- Explore the Gapminder dataset, focusing on Nigeria
+- Push a project to GitHub
 
-## Aim
+---
 
-We will explore the distribution of public hospitals in the states of Nigeria by creating a choropleth map. Recent population projections are used to calculate a hospital density per million population.
+## Setting Up Git
 
-## Data sources
+Start by setting your Git identity (only once per machine):
 
--   [Natural Earth](https://www.naturalearthdata.com/)
--   [GRID3 NGA - Health Facilities v2.0](https://data.grid3.org/datasets/GRID3::grid3-nga-health-facilities-v2-0/about)
--   [NBS Demographic Statistics Bulletin 2021](https://www.nigerianstat.gov.ng/elibrary/read/1241207)
+```{bash}
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
 
-## Load libraries
+This ensures Git tracks changes under your name.
+
+---
+
+## Creating the Project Folder
+
+Use your terminal to create a new project:
+
+```{bash}
+mkdir week1-gapminder
+cd week1-gapminder
+git init
+```
+
+You now have a Git-tracked folder ready to work in.
+
+---
+
+## Adding the Gapminder Dataset
+
+Create a `data/` folder and save the dataset as `gapminder.csv`.
+
+You can download it from:
+
+📎 https://github.com/resbaz/r-novice-gapminder-files/raw/master/data/gapminder-FiveYearData.csv
+
+---
+
+## Writing Your First Python Script
+
+Create a file called `gapminder_nigeria.py`:
 
 ```{python}
-#| label: Load libraries
+# gapminder_nigeria.py
+
 import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
-import seaborn
-from mapclassify import EqualInterval, Quantiles, FisherJenks
-import folium
+
+df = pd.read_csv("data/gapminder.csv")
+nigeria = df[df['country'] == 'Nigeria']
+print(nigeria.head())
 ```
 
-## Read GeoJSON
+This loads the dataset and prints rows related to Nigeria.
+
+---
+
+## Saving the Script with Git
+
+Track and commit your script:
+
+```{bash}
+git add gapminder_nigeria.py
+git commit -m "Initial script to explore Nigeria data"
+```
+
+You’ve saved your first version!
+
+---
+
+## Updating and Re-Committing
+
+Let’s improve the script by narrowing focus to GDP:
 
 ```{python}
-nigeria = gpd.read_file('data/nigeria.geojson')
-nigeria.crs
+# Updated gapminder_nigeria.py
+
+import pandas as pd
+
+df = pd.read_csv("data/gapminder.csv")
+nigeria = df[df['country'] == 'Nigeria']
+
+print("Nigeria GDP per capita (first 5 rows):")
+print(nigeria[['year', 'gdpPercap']].head())
 ```
 
-## Plot data
+Then commit the change:
 
-```{python}
-nigeria.plot()
+```{bash}
+git add gapminder_nigeria.py
+git commit -m "Display Nigeria's GDP per capita"
 ```
 
-```{python}
-nigeria[nigeria['state']=='Edo'].explore()
+---
+
+## Creating a GitHub Repository
+
+1. Go to [github.com](https://github.com)
+2. Click **New repository**
+3. Name it `week1-gapminder`
+4. Leave it empty (don’t add a README or .gitignore)
+
+---
+
+## Connecting Local Git to GitHub
+
+Back in your terminal:
+
+```{bash}
+git remote add origin https://github.com/YOUR-USERNAME/week1-gapminder.git
+git branch -M main
+git push -u origin main
 ```
 
-## Read CSV
+Now your local code is backed up online.
 
-```{python}
-hospitals = pd.read_csv('data/hospitals.csv')
-hospitals.info()
+---
+
+## Verifying Your Project
+
+Check that:
+- Your script appears on GitHub
+- Commit messages are visible
+- The script runs successfully:
+
+```{bash}
+python gapminder_nigeria.py
 ```
 
-## Convert to a GeoDataFrame
+---
 
-```{python}
-hospitals_geo  = gpd.GeoDataFrame(hospitals, geometry=gpd.points_from_xy(hospitals.longitude, hospitals.latitude), crs = 'EPSG:4326')
-hospitals_geo.plot()
+## Summary
+
+You have:
+- Created a Git-tracked project folder
+- Written and updated a Python script using pandas
+- Used Git to track changes and history
+- Pushed your project to GitHub
+- Started exploring real data with code
+
+🎉 Well done — this is the foundation for all future sessions!
+
 ```
 
-## Check CRS match
-
-```{python}
-hospitals_geo.crs == nigeria.crs
-```
-
-## Plot layers
-
-```{python}
-m = nigeria.explore(tiles='CartoDB positron', 
-  color='#ededed', 
-  style_kwds={'fillOpacity':0.5, 'color':'black', 'opacity':0.7}
-  )
-hospitals_geo.explore(m=m, 
-    color='#c51b8a', 
-    style_kwds={'fillOpacity':1, 'color':'#FFFFFF', 'opacity':0.5}, 
-    marker_kwds={'radius':5}
-)
-```
-
-## Point in polyon
-
-```{python}
-hospitals_by_state = gpd.sjoin(hospitals_geo, nigeria, how = 'inner', predicate = 'within')
-hospitals_by_state.head()
-```
-
-## Count hospitals per state
-
-```{python}
-hospitals_by_state_stats = hospitals_by_state.groupby(['state'])['state'].count().sort_values(ascending=False).reset_index(name='count')
-hospitals_by_state_stats.sort_values('count', ascending=False).head()
-```
-
-# Merge datasets
-
-```{python}
-nigeria_hospitals = pd.merge(nigeria, hospitals_by_state_stats, on = 'state', how = 'left')
-nigeria_hospitals.sort_values('count', ascending=False).head()
-```
-
-# Save results
-
-``` python
-nigeria_hospitals.to_file('data/nigeria_hospitals.geojson')
-```
-
-## Check distribution
-
-```{python}
-ax = seaborn.histplot(nigeria_hospitals["count"], bins=5)
-seaborn.rugplot(nigeria_hospitals["count"], height=0.05, color="red", ax=ax);
-nigeria_hospitals["count"].describe()
-```
-
-## Create choropleth map
-
-```{python}
-ax = nigeria_hospitals.plot(
-    column='count',
-    scheme='FisherJenks',
-    cmap='YlGn',
-    legend=True,
-    legend_kwds={'title':'Number of hospitals', 'fmt': '{:.0f}', 'bbox_to_anchor':(1,0.28)},
-)
-nigeria.plot(ax=ax, facecolor='none', edgecolor='black', linewidth=0.2)
-ax.set_title("Hospitals by state in Nigeria")
-ax.set_axis_off();
-```
-
-## Calculate rate
-
-```{python}
-population = pd.read_csv('data/population_by_state.csv')
-nigeria_hospitals_rate = pd.merge(nigeria_hospitals, population, on = 'state', how = 'left')
-nigeria_hospitals_rate['rate'] = (nigeria_hospitals_rate['count'] / nigeria_hospitals_rate['population'])*1000000
-nigeria_hospitals_rate.sort_values('rate', ascending=False).head()
-```
-
-```{python}
-ax = nigeria_hospitals_rate.plot(
-    column='rate',
-    scheme='FisherJenks',
-    cmap='YlGn',
-    legend=True,
-    legend_kwds={'title':'Hospitals per\nmillion population', 'fmt': '{:.1f}', 'bbox_to_anchor':(1,0.28)},
-)
-nigeria.plot(ax=ax, facecolor='none', edgecolor='black', linewidth=0.2)
-ax.set_title("Hospital density by state in Nigeria")
-ax.set_axis_off();
-```
