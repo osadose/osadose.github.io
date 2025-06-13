@@ -367,3 +367,10 @@ Go to Extensions tab (`Ctrl+Shift+X`) and install:
    - Choose the Python executable from `.venv`
 
 **Note**: We'll cover setup details during sessions - don't worry about perfection!
+
+
+<a id="github-account"></a>
+<h2 style="display: flex; align-items: center; gap: 10px; margin-top: 10px">
+  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="28">
+  GitHub Account
+</h2>
