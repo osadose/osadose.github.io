@@ -57,3 +57,37 @@ To make VS Code use this environment:
 
 The set-up steps might be a bit more complicated, so we will cover this during
 the sessions, so don't worry too much about getting it perfect.
+
+
+## Step 3: Set Up Python Interpreter
+Before creating a virtual environment:
+1. Check if Python is installed:
+   ```bash
+   python --version  # or `python3 --version` on macOS/Linux
+   ```
+   - If not installed, download from [python.org](https://www.python.org/downloads/)
+   - **Critical**: Check **"Add Python to PATH"** during installation
+
+---
+
+## Step 4: Create a Virtual Environment
+1. Open your project folder (`File > Open Folder`)
+2. Open the terminal (`Ctrl+`` `)
+3. Create venv:
+   ```bash
+   python -m venv .venv
+   ```
+4. Activate it:
+   - **Windows**:
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - **macOS/Linux**:
+     ```bash
+     source .venv/bin/activate
+     ```
+   → Terminal prompt should show `(.venv)`
+
+5. Select the venv in VS Code:
+   - `Ctrl+Shift+P` → **"Python: Select Interpreter"**
+   - Choose the Python executable from `.venv`
