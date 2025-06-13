@@ -214,3 +214,156 @@ Before creating a virtual environment:
 
 The set-up steps might be a bit more complicated, so we will cover this during
 the sessions, so don't worry too much about getting it perfect.
+
+
+# Software List for the Course
+
+In order to engage fully with the course and achieve all of the goals of the training course, it is necessary that you set-up the following software tools.
+
+These are all free to use and should be relatively easy to set up. If you have any issues in the set-up, please do not hesitate to ask a question using the GitHub issues, or reach out to one of the Data Science Campus team.
+
+---
+
+## <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="28"> GitHub Account
+
+[GitHub](https://github.com) is a developer platform that allows developers to create, store, manage and share their code. This is also the platform we will be using to share the course materials and host the discussion. This can be a great place to see what other data scientists are up to and what cool projects are being worked on.
+
+### Setup Instructions:
+1. Go to [GitHub](https://github.com) and Click Sign Up (top right)
+2. Enter:
+   - Your email address
+   - A username
+   - A secure password
+3. Click Create Account
+4. Verify your email (check your inbox)
+5. Choose Free Plan when prompted
+
+### After Setup:
+- Customize your profile (add picture, bio etc.)
+- Request access to NBS GitHub organisation
+
+**Troubleshooting**: [GitHub Account Help](https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account)
+
+---
+
+## <img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" alt="Git Logo" width="28"> Git
+
+Git is a version control system we will use to share our work with colleagues and manage code changes. It enables collaboration, change tracking, and recovery of previous versions.
+
+### Installation:
+
+#### Windows:
+1. Download from [git-scm.com](https://git-scm.com/)
+2. Run the .exe installer
+3. Use default options unless advised otherwise
+4. Test by opening Git Bash from Start Menu
+
+#### macOS:
+1. Open Terminal
+2. Type `git` and press Enter
+3. If not installed, follow prompts to install Xcode Command Line Tools
+   - OR install via Homebrew:
+     ```bash
+     brew install git
+     ```
+
+#### Linux (Debian/Ubuntu):
+```bash
+sudo apt update
+sudo apt install git
+```
+
+### Configuration:
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+```
+
+### Verify Installation:
+```bash
+git --version
+```
+
+---
+
+## <img src="https://www.python.org/static/opengraph-icon-200x200.png" alt="Python Logo" width="28"> Python
+
+Python is the programming language we'll use for data science. It's open-source with a large community and extensive libraries.
+
+### Installation:
+
+#### Windows:
+1. Download from [python.org](https://www.python.org/downloads/)
+2. **Critical**: Check "Add Python to PATH" during installation
+3. Verify in Command Prompt:
+   ```bash
+   python --version
+   pip --version
+   ```
+
+#### macOS:
+1. Download .pkg installer from Python website
+2. Run installer and follow instructions
+3. Verify in Terminal:
+   ```bash
+   python3 --version
+   pip3 --version
+   ```
+
+#### Linux (Ubuntu):
+```bash
+sudo apt update
+sudo apt install python3 python3-pip
+```
+
+---
+
+## <img src="https://code.visualstudio.com/assets/favicon.ico" alt="VS Code Logo" width="28"> Visual Studio Code
+
+VS Code is our free, industry-standard code editor with Git integration and Python support.
+
+### Installation:
+1. Download from [code.visualstudio.com](https://code.visualstudio.com/)
+2. Run installer (default settings recommended)
+3. Launch VS Code
+
+### Setup:
+
+#### Step 1: Install Essential Extensions
+Go to Extensions tab (`Ctrl+Shift+X`) and install:
+- Python (by Microsoft)
+- Jupyter (for notebooks)
+- GitHub Pull Requests and Issues
+- GitLens
+
+#### Step 2: Set Up Python Interpreter
+1. Check Python installation:
+   ```bash
+   python --version  # or `python3 --version` on macOS/Linux
+   ```
+   - If missing, install from [python.org](https://www.python.org/downloads/)
+   - **Remember**: Check "Add Python to PATH"
+
+#### Step 3: Create a Virtual Environment
+1. Open project folder (`File > Open Folder`)
+2. Open terminal (`Ctrl+`` `)
+3. Create venv:
+   ```bash
+   python -m venv .venv
+   ```
+4. Activate it:
+   - **Windows**:
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - **macOS/Linux**:
+     ```bash
+     source .venv/bin/activate
+     ```
+   → Terminal prompt should show `(.venv)`
+
+5. Select the venv in VS Code:
+   - `Ctrl+Shift+P` → "Python: Select Interpreter"
+   - Choose the Python executable from `.venv`
+
+**Note**: We'll cover setup details during sessions - don't worry about perfection!
