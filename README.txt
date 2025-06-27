@@ -1,5 +1,114 @@
 Hi there, I'm Ose
 
+
+---
+title: "Git + Python: Coding Setup with ISIC-ISCO-CODER"
+format:
+  html:
+    self-contained: true
+jupyter: python3
+---
+
+## Learning Objectives
+
+- Clone an existing GitHub repo
+- Set up Git config in VS Code
+- Create and run a basic Python script
+- Add, commit, and push code to GitHub
+
+---
+
+## 1. Clone the GitHub Repository
+
+Go to: https://github.com/NBS-Nigeria/ISIC-ISCO-CODER  
+Click the green **Code** button → Copy the **HTTPS link**
+
+In **VS Code**, open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`) and type:
+
+```
+Git: Clone
+```
+
+Then:
+- Paste the repo URL
+- Select the destination folder
+- Choose **Open Repository** when prompted
+
+---
+
+## 2. Set Your Git Identity
+
+In the terminal (`Ctrl+``), run:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+---
+
+## 3. Create Your First Python File
+
+In the root folder of the cloned repo, create a new file:
+
+**`hello_nigeria.py`**
+
+Paste the following:
+
+```python
+# hello_nigeria.py
+
+print("Hello Nigeria! Welcome to your first Python script.")
+```
+
+Save the file.
+
+---
+
+## 4. Stage the File
+
+In the terminal:
+
+```bash
+git status
+git add hello_nigeria.py
+```
+
+---
+
+## 5. Commit the File
+
+```bash
+git commit -m "Add initial Python script: Hello Nigeria"
+```
+
+---
+
+## 6. Push to GitHub
+
+```bash
+git push origin main
+```
+
+---
+
+## 7. Confirm on GitHub
+
+Visit: https://github.com/NBS-Nigeria/ISIC-ISCO-CODER  
+You should now see the `hello_nigeria.py` file in the repo.
+
+---
+
+## Summary
+
+You’ve successfully:
+- Cloned a repo
+- Set up Git
+- Written and saved a Python file
+- Committed and pushed code
+
+🎉 **Welcome to Git + Python for data science!**
+
 ---
 title: "Week 1 Live Coding: GitHub + Python Setup"
 format: 
