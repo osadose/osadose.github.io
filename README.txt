@@ -1,6 +1,48 @@
 Hi there, I'm Ose
 
+import pandas as pd
+import string
 
+# Original dirty data
+dirty_df = pd.DataFrame({
+    "person_id": [1101, 1102, 1103, 1104, 1105],
+    "occupation_response": [
+        "Secondary Teacher, PUBLIC school",
+        "REGISTERED NURSE  ",
+        "sells fruit on roadside (informal)",
+        "small-scale gold miner",
+        "CIVIL ENGR. constr.site"
+    ]
+})
+
+# Improved cleaning function
+def clean_text(text):
+    # Convert to string and lowercase
+    text = str(text).lower()
+    
+    # Remove punctuation (keeping apostrophes)
+    text = text.translate(str.maketrans('', '', string.punctuation.replace("'", "")))
+    
+    # Standardize abbreviations
+    replacements = {
+        'engr': 'engineer',
+        'constr': 'construction',
+        'site': ' site'  # Ensure space before 'site'
+    }
+    for wrong, right in replacements.items():
+        text = text.replace(wrong, right)
+    
+    # Fix all spacing issues (including removing hyphens)
+    text = text.replace('-', ' ')  # Replace hyphens with spaces
+    text = ' '.join(text.split())  # This handles all whitespace normalization
+    
+    return text
+
+# Apply cleaning
+dirty_df["cleaned_occupation"] = dirty_df["occupation_response"].apply(clean_text)
+
+# Show results
+dirty_df[["person_id", "occupation_response", "cleaned_occupation"]]
 
 python -m pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 
