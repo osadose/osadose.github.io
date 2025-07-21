@@ -11,17 +11,18 @@ jupyter: python3
 
 ## Learning Objectives
 
-- Read CSV files using pandas
-- Inspect and understand data structure
-- Clean column names and data types
-- Handle missing data
-- Save cleaned datasets for reuse
+- Read CSV files using pandas  
+- Inspect and understand data structure  
+- Clean column names and data types  
+- Handle missing data  
+- Save cleaned datasets for reuse  
+- (Optional) Visualize trends in cleaned data  
 
 ---
 
 ## Loading the Dataset
 
-We will use the same Gapminder dataset you've worked with in previous weeks.
+We’ll use the same Gapminder dataset from previous weeks.
 
 ```{python}
 import pandas as pd
@@ -29,15 +30,24 @@ import pandas as pd
 # Load data
 df = pd.read_csv("../../data/gapminder.csv")
 
-# Preview
+# Preview the dataset
 df.head()
+```
+
+---
+
+## Quick Overview of the Dataset
+
+```{python}
+df.shape  # number of rows and columns
+df.sample(5)  # random sample
 ```
 
 ---
 
 ## Inspecting the Data
 
-Use pandas functions to understand the structure and quality of the dataset.
+Use pandas tools to understand the structure and quality of the data.
 
 ```{python}
 df.info()
@@ -47,9 +57,16 @@ df.columns
 
 ---
 
+## Why This Matters
+
+> Clean, well-structured data reduces errors and makes analysis and communication more effective.  
+> It’s often where most time is spent in real-world data work.
+
+---
+
 ## Filtering for Nigeria
 
-Focus on a subset of the data for practical cleaning:
+Focus on data for Nigeria to keep things simple.
 
 ```{python}
 nigeria = df[df["country"] == "Nigeria"].copy()
@@ -60,7 +77,7 @@ nigeria.head()
 
 ## Renaming Columns
 
-Clean and standardize column names for clarity and consistency:
+Standardize column names for clarity and consistency.
 
 ```{python}
 nigeria.columns = nigeria.columns.str.lower().str.replace(" ", "_")
@@ -72,25 +89,23 @@ nigeria.head()
 
 ## Checking for Missing Data
 
-It's important to check for missing or null values:
+Look for missing values — even if we expect none.
 
 ```{python}
 nigeria.isnull().sum()
 ```
 
-(For this dataset, there are typically no missing values — but this is a best practice step.)
-
 ---
 
-## Data Type Checks and Conversion
+## Checking and Converting Data Types
 
-Make sure each column is the correct type:
+Ensure each column uses the appropriate data type.
 
 ```{python}
 nigeria.dtypes
 ```
 
-If needed, convert `year` to integer or datetime:
+Convert `year` to integer if needed:
 
 ```{python}
 nigeria["year"] = nigeria["year"].astype(int)
@@ -98,9 +113,9 @@ nigeria["year"] = nigeria["year"].astype(int)
 
 ---
 
-## Creating New Columns
+## Creating a New Column
 
-Add a simple new column: total GDP (approximate) = population × gdp_per_capita
+Calculate approximate total GDP: `population × gdp_per_capita`.
 
 ```{python}
 nigeria["total_gdp"] = nigeria["pop"] * nigeria["gdp_per_capita"]
@@ -109,27 +124,64 @@ nigeria[["year", "gdp_per_capita", "pop", "total_gdp"]].head()
 
 ---
 
+## Visualizing GDP per Capita Over Time
+
+```{python}
+import matplotlib.pyplot as plt
+
+nigeria.plot(x="year", y="gdp_per_capita", kind="line", title="GDP per capita in Nigeria")
+plt.ylabel("GDP per capita")
+plt.xlabel("Year")
+plt.grid(True)
+plt.tight_layout()
+```
+
+---
+
 ## Saving the Cleaned Dataset
 
-Once cleaned, export the dataset for future use:
+Export the cleaned data for future use.
 
 ```{python}
 nigeria.to_csv("../../data/gapminder_nigeria_cleaned.csv", index=False)
 ```
 
-Check that the file was saved correctly.
+---
+
+## Confirm File Save
+
+Check that the file exists:
+
+```{python}
+import os
+os.path.exists("../../data/gapminder_nigeria_cleaned.csv")
+```
+
+---
+
+## Optional: Advanced Preview (Stretch)
+
+Group by decade and calculate average GDP per capita (preview of `groupby`):
+
+```{python}
+nigeria["decade"] = (nigeria["year"] // 10) * 10
+nigeria.groupby("decade")["gdp_per_capita"].mean().reset_index()
+```
 
 ---
 
 ## Summary
 
-In this live coding session, we:
+In this session, we:
 
-- Loaded and inspected the Gapminder dataset
-- Focused on Nigeria for simplicity
-- Cleaned column names and checked types
-- Added a derived column (`total_gdp`)
-- Saved the cleaned version for future analysis
+- Loaded and explored the Gapminder dataset  
+- Filtered for Nigeria  
+- Cleaned and renamed columns  
+- Checked for missing data and adjusted types  
+- Added a derived column (`total_gdp`)  
+- Created a simple line plot  
+- Saved a clean version for reuse  
+- (Optional) Introduced grouping for future analysis  
 
+---
 
-```
