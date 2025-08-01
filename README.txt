@@ -1,73 +1,54 @@
 Hi there, I'm Ose
 
 
-import streamlit as st
-import pandas as pd
-import random
-
-st.set_page_config(page_title="Occupation Classification QA Tool", layout="wide")
-
-st.title("📊 Occupation Classification QA Tool")
-st.markdown("""
-Upload your labour force survey data to check if the enumerator-assigned ISCO codes match the predicted ones.
-This tool helps speed up quality assurance and reduce manual checking.
-""")
-
-# File upload
-uploaded_file = st.file_uploader("Upload survey data (.csv or .xlsx)", type=["csv", "xlsx"])
-
-if uploaded_file:
-    # Read file
-    if uploaded_file.name.endswith(".csv"):
-        df = pd.read_csv(uploaded_file)
-    else:
-        df = pd.read_excel(uploaded_file)
-
-    st.subheader("📋 Data Preview")
-    st.dataframe(df.head())
-
-    # Column selection
-    st.subheader("🧭 Map your columns")
-    text_col = st.selectbox("Select occupation text column", df.columns)
-    code_col = st.selectbox("Select assigned ISCO code column", df.columns)
-
-    # Run classification check
-    if st.button("🔍 Run Classification Check"):
-        with st.spinner("Classifying and checking..."):
-            # Mock classification and comparison
-            def mock_predict(text):
-                # Simulate a predicted ISCO code and confidence
-                return random.choice(["2112", "3114", "4221", "5211"]), round(random.uniform(0.7, 0.99), 2)
-
-            df["predicted_code"] = df[text_col].apply(lambda x: mock_predict(x)[0])
-            df["confidence"] = df[text_col].apply(lambda x: mock_predict(x)[1])
-            df["match"] = df.apply(lambda row: row[code_col] == row["predicted_code"], axis=1)
-
-            # Summary
-            st.success("Classification complete.")
-            st.subheader("📈 Summary")
-            total = len(df)
-            correct = df["match"].sum()
-            flagged = total - correct
-            st.metric("Records Checked", total)
-            st.metric("Matches", correct)
-            st.metric("Flagged for Review", flagged)
-
-            # Show results
-            st.subheader("🔎 Flagged Records")
-            st.dataframe(df[df["match"] == False][[text_col, code_col, "predicted_code", "confidence"]])
-
-            # Download
-            st.subheader("⬇️ Download Results")
-            csv = df.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="Download full results as CSV",
-                data=csv,
-                file_name="classified_results.csv",
-                mime="text/csv"
-            )
-
-# Optional help section
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\osadoo\Documents\GitHub\streanlit\.venv\Scripts\streamlit.exe\__main__.py", line 6, in <module>
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\click\core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\click\core.py", line 1363, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\click\core.py", line 1830, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\click\core.py", line 1226, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\click\core.py", line 794, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\cli.py", line 233, in main_run
+    _main_run(target, args, flag_options=kwargs)
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\cli.py", line 269, in _main_run
+    bootstrap.run(file, is_hello, args, flag_options)
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\bootstrap.py", line 430, in run
+    asyncio.run(run_server())
+  File "c:\ONSapps\My_Spyder\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "c:\ONSapps\My_Spyder\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\ONSapps\My_Spyder\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\bootstrap.py", line 418, in run_server     
+    await server.start()
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\server\server.py", line 262, in start      
+    start_listening(app)
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\server\server.py", line 129, in start_listening
+    start_listening_tcp_socket(http_server)
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\streamlit\web\server\server.py", line 188, in start_listening_tcp_socket
+    http_server.listen(port, address)
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\tornado\tcpserver.py", line 183, in listen
+    sockets = bind_sockets(
+              ^^^^^^^^^^^^^
+  File "c:\Users\osadoo\Documents\GitHub\streanlit\.venv\Lib\site-packages\tornado\netutil.py", line 162, in bind_sockets
+    sock.bind(sockaddr)
+PermissionError: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions
 with st.expander("ℹ️ Help"):
     st.markdown("""
     - Make sure your file includes both the free-text occupation field and the ISCO code.
