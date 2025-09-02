@@ -1,5 +1,63 @@
-Job_Title,Job_Description,Job_Sector,Enumerator_ISCO,Enumerator_ISIC,Clean_ISCO_Code,ISCO_Title,ISCO_Confidence,Clean_ISIC_Code,ISIC_Title,ISIC_Confidence,ISCO_Agreement,ISIC_Agreement
-Secondary school teacher,Teaches mathematics to teenagers,Education,2330,8520,234,Primary School and Early Childhood Teachers,0.387,85,Education,1.0,DISAGREE,DISAGREE
-Taxi driver,Drives taxi in Lagos,Transport,8322,4922,8322,"Car, Taxi and Van Drivers",0.42,4922,Other passenger land transport,0.52,AGREE,AGREE
-Cassava farmer,Works on cassava farm,Agriculture,,0111,9213,Mixed Crop and Livestock Farm Labourers,0.469,A,"Agriculture, forestry and fishing",0.508,AUTO_ONLY,DISAGREE
-Okada rider,Transports passengers on motorcycle,Transport,8322,4922,2656,"Announcers on Radio, Television and Other Media",0.477,49,Land transport and transport via pipelines,0.493,DISAGREE,DISAGREE
+{
+  "name": "CitizenOffice",
+  "dockerFile": "Dockerfile",
+  "forwardPorts": [8000, 3000],
+  "postCreateCommand": "pip install -r backend/requirements.txt || true && npm install --prefix frontend || true",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}
+
+
+
+
+# Start from Python image
+FROM mcr.microsoft.com/vscode/devcontainers/python:3.11
+
+# Install Node.js + npm
+RUN apt-get update && apt-get install -y nodejs npm
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Default working directory
+WORKDIR /workspace
+
+
+
+
+# Node
+node_modules/
+.next/
+npm-debug.log
+yarn-error.log
+
+
+
+
+version: '3.9'
+services:
+  db:
+    image: postgis/postgis:15-3.4
+    environment:
+      POSTGRES_DB: citizenoffice
+      POSTGRES_USER: citizen
+      POSTGRES_PASSWORD: citizen
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+
+
