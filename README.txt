@@ -1,1 +1,1 @@
-python -m coder.cli --input inputs\test.csv --output outputs\cleaned_test.csv --isco "coder\data\ISCO-08 EN Structure and definitions.xlsx" --isic "coder\data\ISIC5_Exp_Notes_11Mar2024.xlsx" --config coder\data\config.yaml
+
