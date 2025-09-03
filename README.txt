@@ -1,7 +1,41 @@
-(.venv) PS C:\Users\osadoo\Documents\GitHub\ISCO-ISIC-OCCUPATIONCODER> python -m coder.ml_precompute \  --isco "coder/data/ISCO-08 EN Structure and definitions.xlsx" \  --isic "coder\data\ISIC Rev. 5 Explanatory Notes.xlsx" \  --out coder/data/catalog_embeddings.pkl
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "C:\Users\osadoo\Documents\GitHub\ISCO-ISIC-OCCUPATIONCODER\coder\ml_precompute.py", line 6, in <module>
-    from .loader import load_isco, load_isic
-ImportError: cannot import name 'load_isco' from 'coder.loader' (C:\Users\osadoo\Documents\GitHub\ISCO-ISIC-OCCUPATIONCODER\coder\loader.py)
+import pandas as pd
+
+def load_isco(path):
+    """
+    Load ISCO catalog from Excel.
+    Expects columns with 'Code' and 'Title'.
+    """
+    df = pd.read_excel(path)
+    # normalize column names
+    df.columns = [c.strip().lower() for c in df.columns]
+
+    # Find best guesses for code and title columns
+    code_col = next((c for c in df.columns if "code" in c), None)
+    title_col = next((c for c in df.columns if "title" in c), None)
+
+    if not code_col or not title_col:
+        raise ValueError("ISCO file must contain 'code' and 'title' columns")
+
+    return df[[code_col, title_col]].rename(
+        columns={code_col: "code", title_col: "title"}
+    )
+
+
+def load_isic(path):
+    """
+    Load ISIC catalog from Excel.
+    Expects columns with 'Code' and 'Title'.
+    """
+    df = pd.read_excel(path)
+    # normalize column names
+    df.columns = [c.strip().lower() for c in df.columns]
+
+    code_col = next((c for c in df.columns if "code" in c), None)
+    title_col = next((c for c in df.columns if "title" in c), None)
+
+    if not code_col or not title_col:
+        raise ValueError("ISIC file must contain 'code' and 'title' columns")
+
+    return df[[code_col, title_col]].rename(
+        columns={code_col: "code", title_col: "title"}
+    )
