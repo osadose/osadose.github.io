@@ -15,3 +15,18 @@ Traceback (most recent call last):
   File "c:\Users\osadoo\Documents\GitHub\ML-coder\main.py", line 31, in main
     evaluate_and_save(model, X_test, y_test, config["paths"]["output_dir"], prefix="D2")
 TypeError: evaluate_and_save() got an unexpected keyword argument 'prefix'
+
+
+
+
+# assuming you have these already prepared:
+# X_holdout, y_holdout, X_test, y_test, config, timestamp
+data_splits = {
+    "X_holdout": X_holdout,
+    "y_holdout": y_holdout,
+    "X_test": X_test,
+    "y_test": y_test
+}
+
+evaluate_and_save(best_model, data_splits, config, timestamp)
+
