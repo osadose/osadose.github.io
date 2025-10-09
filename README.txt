@@ -1,5 +1,9 @@
 
-
+Documents/GitHub/ML-coder - Copy/main.py"
+Traceback (most recent call last):
+  File "c:\Users\osadoo\Documents\GitHub\ML-coder - Copy\main.py", line 15, in <module>
+    from coder.evaluate import compute_metrics, normalize_code_str, evaluate_on_D2
+ModuleNotFoundError: No module named 'coder.evaluate'
 
 
 
