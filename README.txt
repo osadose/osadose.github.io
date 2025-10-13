@@ -1,3 +1,1 @@
-My most valuable asset is a blend of technical skill and a deep-seated public service ethos. I am not only skilled in building NLP models and data pipelines, but I am also driven by a commitment to creating technology that is equitable, accountable, and serves the public good. I am adept at proactively identifying and mitigating bias in datasets and algorithms, ensuring our solutions build public trust.
 
-This motivation is precisely why I want to participate in the Challenge. I see it as a direct way to apply my craft to its most meaningful purpose: addressing societal-scale challenges and demonstrating how responsible AI can be a force for good in governance.
